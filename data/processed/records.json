@@ -1,0 +1,44 @@
+[
+  {
+    "order_id": 101,
+    "restaurant_name": "Tandoori Nights",
+    "amount": 350.5,
+    "delivery_time_minutes": 32,
+    "is_delivered": true
+  },
+  {
+    "order_id": 102,
+    "restaurant_name": "Spice Bazaar",
+    "amount": 180.0,
+    "delivery_time_minutes": 25,
+    "is_delivered": true
+  },
+  {
+    "order_id": 103,
+    "restaurant_name": "The Yellow Chilli",
+    "amount": 520.75,
+    "delivery_time_minutes": 45,
+    "is_delivered": false
+  },
+  {
+    "order_id": 104,
+    "restaurant_name": "Royal Punjab",
+    "amount": 240.0,
+    "delivery_time_minutes": 28,
+    "is_delivered": true
+  },
+  {
+    "order_id": 105,
+    "restaurant_name": "Curry Leaf Express",
+    "amount": 610.25,
+    "delivery_time_minutes": 50,
+    "is_delivered": false
+  },
+  {
+    "order_id": 106,
+    "restaurant_name": "Urban Dhaba",
+    "amount": 195.5,
+    "delivery_time_minutes": 22,
+    "is_delivered": true
+  }
+]
