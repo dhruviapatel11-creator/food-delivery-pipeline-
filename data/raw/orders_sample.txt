@@ -1,0 +1,7 @@
+order_id,restaurant_name,order_amount_raw,delivery_status
+ORD-101,  tandoori nights  ,Rs 350.50,delivered
+ORD-102,SPICE BAZAAR,Rs 180.00,delivered
+ORD-103,the yellow CHILLI  ,Rs 520.75,pending
+ORD-104,   curry leaf   ,Rs 240.00,delivered
+ORD-105,royal punjab,Rs 610.00,delivered
+ORD-106,Urban Dhaba,Rs 195.25,cancelled
