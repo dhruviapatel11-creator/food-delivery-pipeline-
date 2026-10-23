@@ -76,6 +76,34 @@ def filter_audit_records(
     return list(filter(lambda record: record["fee"] > threshold, records_with_fees))
 
 
+def generate_audit_report(
+    records_with_fees: List[Dict[str, Any]], threshold: float = AUDIT_FEE_THRESHOLD
+) -> Dict[str, Any]:
+    """
+    Generates a structured analytical audit report summarizing high-value commissions.
+    
+    Args:
+        records_with_fees: List of records containing 'fee'.
+        threshold: Minimum fee to qualify for audit.
+        
+    Returns:
+        Dictionary containing audit metrics and isolated records.
+    """
+    flagged = filter_audit_records(records_with_fees, threshold)
+    total_flagged_fee = round(sum(r["fee"] for r in flagged), 2)
+    max_fee_record = max(flagged, key=lambda r: r["fee"], default=None)
+    
+    return {
+        "threshold": threshold,
+        "total_records": len(records_with_fees),
+        "flagged_count": len(flagged),
+        "flagged_percentage": round((len(flagged) / len(records_with_fees) * 100), 2) if records_with_fees else 0.0,
+        "total_flagged_fee": total_flagged_fee,
+        "max_fee_record": max_fee_record,
+        "flagged_records": flagged,
+    }
+
+
 def calculate_total_commission(records_with_fees: List[Dict[str, Any]]) -> float:
     """
     Uses functools.reduce() in a single expression to aggregate total commission.
