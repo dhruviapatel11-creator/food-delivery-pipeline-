@@ -8,6 +8,7 @@ from src.fee_calculator import (
     calculate_tiered_commission,
     compute_fees,
     filter_audit_records,
+    generate_audit_report,
     calculate_total_commission,
 )
 
@@ -62,6 +63,20 @@ class TestFeeCalculator(unittest.TestCase):
         # Fees > 50.00 should only match id 2 (60.00) and id 4 (140.00)
         self.assertEqual(len(audit_50), 2)
         self.assertEqual([r["id"] for r in audit_50], [2, 4])
+
+    def test_generate_audit_report(self):
+        """Test structured analytical audit report generation."""
+        sample_with_fees = [
+            {"id": 1, "name": "Rest A", "amount": 100.00, "fee": 10.00},
+            {"id": 2, "name": "Rest B", "amount": 400.00, "fee": 60.00},
+            {"id": 3, "name": "Rest C", "amount": 700.00, "fee": 140.00},
+        ]
+        report = generate_audit_report(sample_with_fees, threshold=50.00)
+        self.assertEqual(report["total_records"], 3)
+        self.assertEqual(report["flagged_count"], 2)
+        self.assertEqual(report["flagged_percentage"], 66.67)
+        self.assertEqual(report["total_flagged_fee"], 200.00)
+        self.assertEqual(report["max_fee_record"]["id"], 3)
 
     def test_calculate_total_commission_reduce(self):
         """Test total fee reduction across all records in a single expression."""
