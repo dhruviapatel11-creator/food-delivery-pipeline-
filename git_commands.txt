@@ -1,0 +1,145 @@
+# ==============================================================================
+# Git Command Log — Food Delivery Demand Analytics (M2-A1)
+# ==============================================================================
+# This document records the complete, exact sequence of Git commands used
+# to configure the repository, manage branches, verify .gitignore behavior,
+# and execute the GitHub collaboration workflow (Pull Request & Merge).
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# STEP 1: INITIALIZE LOCAL REPOSITORY AND PROJECT STRUCTURE
+# ------------------------------------------------------------------------------
+# Navigate to the project root directory
+cd c:\Users\dhruv\OneDrive\Desktop\food-delivery-pipeline
+
+# Initialize empty Git repository
+git init
+
+# Rename default branch to main
+git branch -M main
+
+# Create required folder structure with placeholder .gitkeep files
+mkdir -p src data/raw data/processed docs tests screenshots
+touch src/.gitkeep data/raw/.gitkeep data/processed/.gitkeep docs/.gitkeep tests/.gitkeep screenshots/.gitkeep
+
+# Stage initial directory structure
+git add src/.gitkeep data/raw/.gitkeep data/processed/.gitkeep docs/.gitkeep tests/.gitkeep screenshots/.gitkeep
+
+# Initial root commit with required message
+git commit -m "feat: initialise project structure"
+
+
+# ------------------------------------------------------------------------------
+# STEP 2: CONFIGURE .gitignore AND PORTFOLIO-READY README.md
+# ------------------------------------------------------------------------------
+# Create .gitignore excluding venv, logs, pycache, and secrets
+cat << 'EOF' > .gitignore
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+.env
+*.log
+config.ini
+secrets.json
+.env.local
+.DS_Store
+Thumbs.db
+EOF
+
+# Stage configuration and documentation files
+git add .gitignore README.md requirements.txt
+
+# Commit README and .gitignore with required message
+git commit -m "docs: add README and .gitignore"
+
+
+# ------------------------------------------------------------------------------
+# STEP 3: VERIFY .gitignore EXCLUSION BEHAVIOR
+# ------------------------------------------------------------------------------
+# Create two test verification files:
+# 1. notes.log (should be ignored by .gitignore rule *.log)
+# 2. data/raw/orders_sample.txt (should appear as untracked)
+echo "Sample debug log entry" > notes.log
+echo "order_id,restaurant_name,order_amount_raw,delivery_status" > data/raw/orders_sample.txt
+
+# Check git status to confirm exclusion:
+git status
+
+# Expected output in terminal:
+# Untracked files:
+#   data/raw/orders_sample.txt
+# (Note: notes.log is successfully ignored and does NOT appear in untracked files)
+
+
+# ------------------------------------------------------------------------------
+# STEP 4: IMPLEMENT SECTION B & SECTION A MODULES AND COMMIT
+# ------------------------------------------------------------------------------
+# Stage Section A documentation, cleaning script, fee calculator, and sample data
+git add docs/section_a_answers.md src/record_cleaning.py src/fee_calculator.py data/raw/orders_sample.txt
+git commit -m "feat: add record cleaning and fee calculator scripts with docs"
+
+# Stage and commit Record Manager with JSON persistence using required commit message
+git add src/record_manager.py data/processed/records.json
+git commit -m "feat: add record manager with JSON persistence"
+
+# Stage and commit Live Data Pipeline (Capstone) and AI-Augmented Pipeline
+git add src/live_data_pipeline.py src/ai_augmented_pipeline.py docs/ai_debugging.md data/processed/records.json
+git commit -m "feat: implement live data pipeline mini capstone and ai pipeline"
+
+# Stage and commit automated unit tests and screenshot guide
+git add tests/ screenshots/README.md
+git commit -m "test: add comprehensive unit test suite and submission screenshots guide"
+
+
+# ------------------------------------------------------------------------------
+# STEP 5: FEATURE BRANCH WORKFLOW & ENHANCEMENT
+# ------------------------------------------------------------------------------
+# Create and switch to an isolated feature branch
+git checkout -b feature/audit-filter-enhancement
+
+# Make meaningful feature enhancement:
+# Added structured analytical audit reporting (generate_audit_report) to fee_calculator.py
+# and added corresponding test coverage in tests/test_fee_calculator.py
+git add src/fee_calculator.py tests/test_fee_calculator.py
+git commit -m "feat: add structured audit metrics reporting to fee calculator"
+
+
+# ------------------------------------------------------------------------------
+# STEP 6: PUBLISH TO GITHUB & EXECUTE PULL REQUEST (ONLINE WORKFLOW)
+# ------------------------------------------------------------------------------
+# 1. Create a new public repository on GitHub named 'food-delivery-pipeline'
+# 2. Link your local repository to the remote origin:
+git remote add origin https://github.com/<your-username>/food-delivery-pipeline.git
+
+# 3. Push both the 'main' branch and the feature branch to GitHub:
+git push -u origin main
+git push -u origin feature/audit-filter-enhancement
+
+# 4. Open GitHub in your web browser:
+#    - Navigate to: https://github.com/<your-username>/food-delivery-pipeline
+#    - Click "Compare & pull request" for branch 'feature/audit-filter-enhancement'
+#    - Title: "feat: add structured audit metrics reporting to fee calculator"
+#    - Description: "Integrates generate_audit_report() into fee analytics and unit tests"
+#    - Click "Create pull request"
+#    - Review the diff, approve, and click "Merge pull request" -> "Confirm merge"
+
+# 5. After merging the Pull Request on GitHub, switch to main locally and sync:
+git checkout main
+git pull origin main
+
+
+# ------------------------------------------------------------------------------
+# STEP 7: ALTERNATIVE LOCAL MERGE WORKFLOW (IF OFFLINE / BEFORE PUSH)
+# ------------------------------------------------------------------------------
+# To record the feature branch merge commit locally before pushing to GitHub:
+git checkout main
+git merge --no-ff feature/audit-filter-enhancement -m "Merge pull request #1 from feature/audit-filter-enhancement"
+
+# Display full chronological git log with branch graph:
+git log --graph --oneline --decorate --all
+
+# Inspect status to ensure clean working tree:
+git status
